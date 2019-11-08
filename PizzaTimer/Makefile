@@ -1,0 +1,8 @@
+.PHONY: test build
+
+test:
+	npm test
+
+build:
+	docker run --rm --name rn-env reactnativecommunity/react-native-android bash -c "npm i -g envinfo && envinfo"
+	docker run --rm --name rn-build -v $(PWD):/pwd -w /pwd reactnativecommunity/react-native-android bash -c "yarn install && cd android && chmod +x gradlew && ./gradlew assembleRelease"
